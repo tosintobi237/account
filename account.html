@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/output.css">
+    <title>Daily Record Table</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body class="bg-slate-700">
+    <!-- Input Section -->
+<div class="container min-w-full ">
+
+    <div class="flex flex-wrap items-center justify-center m-2">
+
+    <div class="mr-2 person1">
+        <h3 class="mb-2 text-xl font-extrabold text-center">Iya Okiki</h3>
+        <input type="number" placeholder="No. of bags" id="bags1" />
+        <input type="number" placeholder="Amount paid" id="amount1" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person2" >
+        <h3 class="mb-2 text-xl font-extrabold text-center">iya ojuko</h3>
+        <input id="bags2" type="number" placeholder="No. of bags" />
+        <input id="amount2" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person3" >
+        <h3 class="mb-2 text-xl font-extrabold text-center">iya ikimo</h3>
+        <input id="bags3" type="number" placeholder="No. of bags" />
+        <input id="amount3" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+
+    <div class="mr-2 person4" >
+        <h3 class="mb-2 text-xl font-extrabold text-center">mum kb</h3>
+        <input id="bags4" type="number" placeholder="No. of bags" />
+        <input id="amount4" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person5" >
+        <h3 class="mb-2 text-xl font-extrabold text-center">coded</h3>
+        <input id="bags5" type="number" placeholder="No. of bags" />
+        <input id="amount5" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person6" >
+        <h3 class="mb-2 text-xl font-extrabold text-center">iya abuja</h3>
+        <input id="bags6" type="number" placeholder="No. of bags" />
+        <input id="amount6" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person7" >
+        <h3 class="mb-2 text-xl font-extrabold text-center">skiddo</h3>
+        <input id="bags7" type="number" placeholder="No. of bags" />
+        <input id="amount7" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person8" >
+        <h3 class="mb-2 text-xl font-extrabold text-center">jubril</h3>
+        <input id="bags8" type="number" placeholder="No. of bags" />
+        <input id="amount8" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person9" >
+        <h3 class="mb-2 text-xl font-extrabold text-center">bfr jubril</h3>
+        <input id="bags9" type="number" placeholder="No. of bags" />
+        <input id="amount9" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person10 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">bsd jubril</h3>
+        <input id="bags10" type="number" placeholder="No. of bags" />
+        <input id="amount10" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person11 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">food alhaji</h3>
+        <input id="bags11" type="number" placeholder="No. of bags" />
+        <input id="amount11" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person12 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">alhaji</h3>
+        <input id="bags12" type="number" placeholder="No. of bags" />
+        <input id="amount12" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person13 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">abk tipper</h3>
+        <input id="bags13" type="number" placeholder="No. of bags" />
+        <input id="amount13" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person14 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">food tipper</h3>
+        <input id="bags14" type="number" placeholder="No. of bags" />
+        <input id="amount14" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person15 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">container1</h3>
+        <input id="bags15" type="number" placeholder="No. of bags" />
+        <input id="amount15" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person16 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">container2</h3>
+        <input id="bags16" type="number" placeholder="No. of bags" />
+        <input id="amount16" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person17 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">amala</h3>
+        <input id="bags17" type="number" placeholder="No. of bags" />
+        <input id="amount17" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person18 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">baba gate</h3>
+        <input id="bags18" type="number" placeholder="No. of bags" />
+        <input id="amount18" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person19 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">abk upgarage</h3>
+        <input id="bags19" type="number" placeholder="No. of bags" />
+        <input id="amount19" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person20 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">oloti</h3>
+        <input id="bags20" type="number" placeholder="No. of bags" />
+        <input id="amount20" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person21 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">mum emma</h3>
+        <input id="bags21" type="number" placeholder="No. of bags" />
+        <input id="amount21" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person22 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">olainukan</h3>
+        <input id="bags22" type="number" placeholder="No. of bags" />
+        <input id="amount22" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person23 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">bet9ja</h3>
+        <input id="bags23" type="number" placeholder="No. of bags" />
+        <input id="amount23" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person24 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">abk oja</h3>
+        <input id="bags24" type="number" placeholder="No. of bags" />
+        <input id="amount24" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person25 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">mama d</h3>
+        <input id="bags25" type="number" placeholder="No. of bags" />
+        <input id="amount25" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person26 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">bottle</h3>
+        <input id="bags26" type="number" placeholder="No. of bags" />
+        <input id="amount26" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person27 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">iya abba</h3>
+        <input id="bags27" type="number" placeholder="No. of bags" />
+        <input id="amount27" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person28 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">opp wholesales</h3>
+        <input id="bags28" type="number" placeholder="No. of bags" />
+        <input id="amount28" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person29 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">bsd dara</h3>
+        <input id="bags29" type="number" placeholder="No. of bags" />
+        <input id="amount29" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person30 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">dara</h3>
+        <input id="bags30" type="number" placeholder="No. of bags" />
+        <input id="amount30" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person31 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">brf dara</h3>
+        <input id="bags31" type="number" placeholder="No. of bags" />
+        <input id="amount31" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person32 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">oyinbo jesu</h3>
+        <input id="bags32" type="number" placeholder="No. of bags" />
+        <input id="amount32" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person33 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">alaja up</h3>
+        <input id="bags33" type="number" placeholder="No. of bags" />
+        <input id="amount33" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="mr-2 person34 ">
+        <h3 class="mb-2 text-xl font-extrabold text-center">ologun</h3>
+        <input id="bags34" type="number" placeholder="No. of bags" />
+        <input id="amount34" type="number" placeholder="Amount paid" />
+        <p class="my-2 text-center">Old balance = <span class="old-balance"></span></p>
+        <p class="mb-4 text-center">Total balance = <span class="total-balance"></span></p>
+    </div>
+    <div class="">
+    <button class="p-2 mb-3 duration-500 border-4 bg-slate-700 rounded-xl hover:bg-slate-800 ml- hover:translate-x-3" onclick="calculateBalance()">Total cal.</button>
+    </div> 
+</div>
+    <!-- Add more people here similar to the person1 block -->
+</div>
+
+    <!-- Button -->
+
+    <!-- Totals Display -->
+    <h3 class="mt-4 ml-2 text-xl font-extrabold">Totals:-</h3>
+    <p class="ml-2 text-xl font-extrabold">Total Number of Bags:- <span id="totalBags"></span></p>
+    <p class="ml-2 text-xl font-extrabold">Total Amount Paid:- <span id="totalAmountPaid"></span></p>
+    <p class="ml-2 text-xl font-extrabold">Total Old Balance Before Click:- <span id="totalOldBalanceBeforeClick"></span></p>
+    <p class="ml-2 text-xl font-extrabold">Total Balance After Click:- <span id="totalBalanceAfterClick"></span></p>
+<br>
+<br>
+<br>
+<br>
+<br>
+    <!-- Detailed Table -->
+    <h3 class="text-2xl font-extrabold text-center">Daily Record Table</h3>
+    <table id="recordTable">
+        <thead>
+            <tr>
+                <th>Date & Time</th>
+                <th>Name</th>
+                <th>Number of Bags</th>
+                <th>Amount Paid</th>
+                <th>Old Balance</th>
+                <th>New Total Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be inserted here by JavaScript -->
+        </tbody>
+    </table>
+
+    <script src="./src/add.js"></script>
+</body>
+</html>
