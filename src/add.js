@@ -18,8 +18,8 @@ function calculateBalance() {
 
         document.querySelector('.person' + i + ' .total-balance').textContent = totalBalance.toFixed(2);
         
-        // Update balance on the backend instead of localStorage
-        updateBalanceInBackend(i, totalBalance.toFixed(2));
+        // Update balance in local storage
+        localStorage.setItem('balance' + i, totalBalance.toFixed(2));
         
         document.querySelector('.person' + i + ' .old-balance').textContent = totalBalance.toFixed(2);
 
@@ -47,155 +47,98 @@ function calculateBalance() {
         updatePersonBalance(i, 300);
     }
 
-    // Save the updated table content with the current time in global storage
-    saveDailyTransactions(currentDateTime, tableBody.innerHTML);
+    // Save the updated table content with the current time in local storage
+    localStorage.setItem('transaction_' + currentDateTime, tableBody.innerHTML);
 
     document.getElementById('totalBags').textContent = totalBags;
     document.getElementById('totalAmountPaid').textContent = totalAmountPaid.toFixed(2);
     document.getElementById('totalOldBalanceBeforeClick').textContent = totalOldBalanceBeforeClick.toFixed(2);
     document.getElementById('totalBalanceAfterClick').textContent = totalBalanceAfterClick.toFixed(2);
 
-    displaySavedTransactions(); // Update the list of saved transactions
+    listSavedTransactions(); // Update the list of saved transactions
 }
 
-// Replace localStorage set operation with API call to save balance
-function updateBalanceInBackend(personId, balance) {
-    // Example API call
-    fetch('/api/updateBalance', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ personId: personId, balance: balance }),
-    }).then(response => {
-        if (!response.ok) {
-            console.error('Failed to update balance for person ' + personId);
-        }
-    }).catch(error => {
-        console.error('Error updating balance:', error);
-    });
-}
-
-// Save the transaction in global storage with the date and time as the key
-function saveDailyTransactions(currentDateTime, tableBodyContent) {
-    fetch('/api/saveTransaction', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ dateTime: currentDateTime, tableBody: tableBodyContent }),
-    }).then(response => {
-        if (!response.ok) {
-            console.error('Failed to save transactions');
-        }
-    }).catch(error => {
-        console.error('Error saving transactions:', error);
-    });
-}
-
-// Load transactions for a specific date and time
+// Load transactions for a specific date and time from local storage
 function loadTransactionsForDateTime(dateTime) {
-    fetch(`/api/getTransaction?dateTime=${encodeURIComponent(dateTime)}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.tableBody) {
-                document.querySelector('#recordTable tbody').innerHTML = data.tableBody;
-            } else {
-                alert('No transactions found for ' + dateTime);
-            }
-        })
-        .catch(error => {
-            console.error('Error loading transactions:', error);
-        });
+    let savedTransaction = localStorage.getItem('transaction_' + dateTime);
+    if (savedTransaction) {
+        document.querySelector('#recordTable tbody').innerHTML = savedTransaction;
+    } else {
+        alert('No transactions found for ' + dateTime);
+    }
 }
 
-// Delete transactions for a specific date and time with confirmation
+// Delete transactions for a specific date and time from local storage with confirmation
 function deleteTransactionsForDateTime(dateTime) {
     let confirmation = confirm('Are you sure you want to delete the transactions for ' + dateTime + '?');
     if (confirmation) {
-        fetch(`/api/deleteTransaction?dateTime=${encodeURIComponent(dateTime)}`, {
-            method: 'DELETE'
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('Transactions for ' + dateTime + ' have been deleted.');
-                displaySavedTransactions(); // Refresh the list after deletion
-            } else {
-                alert('Failed to delete transactions for ' + dateTime);
-            }
-        })
-        .catch(error => {
-            console.error('Error deleting transactions:', error);
-        });
+        localStorage.removeItem('transaction_' + dateTime);
+        alert('Transactions for ' + dateTime + ' have been deleted.');
+        listSavedTransactions(); // Refresh the list after deletion
     } else {
         alert('Deletion canceled.');
     }
 }
 
-// List all saved transactions by date and time
+// List all saved transactions by date and time from local storage
 function listSavedTransactions() {
-    fetch('/api/listTransactions')
-        .then(response => response.json())
-        .then(data => {
-            let savedTransactions = data.transactions;
-            let transactionListDiv = document.getElementById('savedTransactionList');
-            transactionListDiv.innerHTML = '';
+    let transactionListDiv = document.getElementById('savedTransactionList');
+    transactionListDiv.innerHTML = '';
 
-            if (savedTransactions.length === 0) {
-                transactionListDiv.textContent = 'No saved transactions.';
-            } else {
-                savedTransactions.forEach(function(dateTime) {
-                    let transactionItem = document.createElement('div');
-                    transactionItem.textContent = dateTime;
+    let keys = Object.keys(localStorage);
+    let savedTransactions = keys.filter(key => key.startsWith('transaction_')).map(key => key.replace('transaction_', ''));
 
-                    let loadButton = document.createElement('button');
-                    loadButton.textContent = 'Load';
-                    loadButton.onclick = function() {
-                        loadTransactionsForDateTime(dateTime);
-                    };
-                    transactionItem.appendChild(loadButton);
+    if (savedTransactions.length === 0) {
+        transactionListDiv.textContent = 'No saved transactions.';
+    } else {
+        savedTransactions.forEach(function(dateTime) {
+            let transactionItem = document.createElement('div');
+            transactionItem.textContent = dateTime;
 
-                    let deleteButton = document.createElement('button');
-                    deleteButton.textContent = 'Delete';
-                    deleteButton.onclick = function() {
-                        deleteTransactionsForDateTime(dateTime);
-                    };
-                    transactionItem.appendChild(deleteButton);
+            let loadButton = document.createElement('button');
+            loadButton.textContent = 'Load';
+            loadButton.onclick = function() {
+                loadTransactionsForDateTime(dateTime);
+            };
+            transactionItem.appendChild(loadButton);
 
-                    transactionListDiv.appendChild(transactionItem);
-                });
-            }
-        })
-        .catch(error => {
-            console.error('Error listing transactions:', error);
+            let deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                deleteTransactionsForDateTime(dateTime);
+            };
+            transactionItem.appendChild(deleteButton);
+
+            transactionListDiv.appendChild(transactionItem);
         });
+    }
+}
+
+// Existing load balances and table function from local storage
+function loadBalancesAndTable() {
+    for (let i = 1; i <= 40; i++) {
+        let savedBalance = localStorage.getItem('balance' + i);
+        if (savedBalance !== null) {
+            document.querySelector('.person' + i + ' .old-balance').textContent = savedBalance;
+            document.querySelector('.person' + i + ' .total-balance').textContent = savedBalance;
+        }
+    }
+
+    let savedTableContent = localStorage.getItem('transaction_' + new Date().toLocaleString());
+    if (savedTableContent !== null) {
+        document.querySelector('#recordTable tbody').innerHTML = savedTableContent;
+    }
 }
 
 // Initialize the page on load
 window.onload = function() {
     loadBalancesAndTable();
-    displaySavedTransactions();
+    listSavedTransactions();
 };
 
-// Existing load balances and table function
-function loadBalancesAndTable() {
-    fetch('/api/getBalances')
-        .then(response => response.json())
-        .then(data => {
-            for (let i = 1; i <= 40; i++) {
-                let savedBalance = data['balance' + i];
-                if (savedBalance !== null) {
-                    document.querySelector('.person' + i + ' .old-balance').textContent = savedBalance;
-                    document.querySelector('.person' + i + ' .total-balance').textContent = savedBalance;
-                }
-            }
-
-            let savedTableContent = data.tableContent;
-            if (savedTableContent !== null) {
-                document.querySelector('#recordTable tbody').innerHTML = savedTableContent;
-            }
-        })
-        .catch(error => {
-            console.error('Error loading balances and table:', error);
-        });
-}
+// Make functions global
+window.calculateBalance = calculateBalance;
+window.loadTransactionsForDateTime = loadTransactionsForDateTime;
+window.deleteTransactionsForDateTime = deleteTransactionsForDateTime;
+window.listSavedTransactions = listSavedTransactions;
+window.loadBalancesAndTable = loadBalancesAndTable;
