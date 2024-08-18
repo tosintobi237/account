@@ -42,11 +42,11 @@ function calculateBalance() {
         updatePersonBalance(i, 250);
     }
     updatePersonBalance(12, 280);
-    updatePersonBalance(41, 250);
     updatePersonBalance(13, 270);
     for (let i = 14; i <= 40; i++) {
         updatePersonBalance(i, 300);
     }
+    updatePersonBalance(41, 250);
 
     // Save the updated table content with the current time in local storage
     localStorage.setItem('transaction_' + currentDateTime, tableBody.innerHTML);
