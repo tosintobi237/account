@@ -1,9 +1,13 @@
-// Function to calculate balance and save transactions by date and time
+
+
+
+
 function calculateBalance() {
     let totalBags = 0;
     let totalAmountPaid = 0;
     let totalOldBalanceBeforeClick = 0;
     let totalBalanceAfterClick = 0;
+    let totalCostSum = 0;
     let tableBody = document.querySelector('#recordTable tbody');
     tableBody.innerHTML = ''; // Clear previous records
 
@@ -17,16 +21,17 @@ function calculateBalance() {
         let totalBalance = totalCost - amountPaid + oldBalance;
 
         document.querySelector('.person' + i + ' .total-balance').textContent = totalBalance.toFixed(2);
-        
+
         // Update balance in local storage
         localStorage.setItem('balance' + i, totalBalance.toFixed(2));
-        
+
         document.querySelector('.person' + i + ' .old-balance').textContent = totalBalance.toFixed(2);
 
         totalBags += bags;
         totalAmountPaid += amountPaid;
         totalOldBalanceBeforeClick += oldBalance;
         totalBalanceAfterClick += totalBalance;
+        totalCostSum += totalCost;
 
         let row = tableBody.insertRow();
         row.insertCell(0).textContent = currentDateTime;
@@ -48,6 +53,15 @@ function calculateBalance() {
     }
     updatePersonBalance(41, 250);
 
+    // Add a final row for the total sums
+    let totalRow = tableBody.insertRow();
+    totalRow.insertCell(0).textContent = currentDateTime;
+    totalRow.insertCell(1).textContent = 'Total';
+    totalRow.insertCell(2).textContent = totalBags;
+    totalRow.insertCell(3).textContent = totalAmountPaid.toFixed(2);
+    totalRow.insertCell(4).textContent = totalOldBalanceBeforeClick.toFixed(2);
+    totalRow.insertCell(5).textContent = totalBalanceAfterClick.toFixed(2);
+
     // Save the updated table content with the current time in local storage
     localStorage.setItem('transaction_' + currentDateTime, tableBody.innerHTML);
 
@@ -58,6 +72,9 @@ function calculateBalance() {
 
     listSavedTransactions(); // Update the list of saved transactions
 }
+
+
+
 
 // Load transactions for a specific date and time from local storage
 function loadTransactionsForDateTime(dateTime) {
