@@ -54,13 +54,15 @@ function calculateBalance() {
     updatePersonBalance(41, 250);
 
     // Add a final row for the total sums
-    let totalRow = tableBody.insertRow();
-    totalRow.insertCell(0).textContent = currentDateTime;
-    totalRow.insertCell(1).textContent = 'Total';
-    totalRow.insertCell(2).textContent = totalBags;
-    totalRow.insertCell(3).textContent = totalAmountPaid.toFixed(2);
-    totalRow.insertCell(4).textContent = totalOldBalanceBeforeClick.toFixed(2);
-    totalRow.insertCell(5).textContent = totalBalanceAfterClick.toFixed(2);
+let totalRow = tableBody.insertRow();
+totalRow.insertCell(0).innerHTML = '<strong>' + currentDateTime + '</strong>';
+totalRow.insertCell(1).innerHTML = '<strong>TOTAL</strong>';
+totalRow.insertCell(2).innerHTML = '<strong>' + totalBags + '</strong>';
+totalRow.insertCell(3).innerHTML = '<strong>' + totalAmountPaid.toFixed(2) + '</strong>';
+totalRow.insertCell(4).innerHTML = '<strong>' + totalOldBalanceBeforeClick.toFixed(2) + '</strong>';
+totalRow.insertCell(5).innerHTML = '<strong>' + totalBalanceAfterClick.toFixed(2) + '</strong>';
+
+    
 
     // Save the updated table content with the current time in local storage
     localStorage.setItem('transaction_' + currentDateTime, tableBody.innerHTML);
