@@ -47,11 +47,28 @@ function calculateBalance() {
         updatePersonBalance(i, 250);
     }
     updatePersonBalance(12, 280);
-    updatePersonBalance(13, 270);
-    for (let i = 14; i <= 40; i++) {
+    updatePersonBalance(13, 250);
+    for (let i = 14; i <= 20; i++) {
+        updatePersonBalance(i, 300);
+    }
+    updatePersonBalance(21, 270);
+
+    for (let i = 22; i <= 28; i++) {
+        updatePersonBalance(i, 300);
+    }
+    updatePersonBalance(29, 250);
+    updatePersonBalance(30, 250);
+
+    for (let i = 31; i <= 36; i++) {
+        updatePersonBalance(i, 300);
+    }
+    updatePersonBalance(37, 250);
+
+    for (let i = 38; i <= 40; i++) {
         updatePersonBalance(i, 300);
     }
     updatePersonBalance(41, 250);
+    updatePersonBalance(42, 300);
 
     // Add a final row for the total sums
 let totalRow = tableBody.insertRow();
