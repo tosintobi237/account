@@ -153,7 +153,7 @@ function listSavedTransactions() {
 
 // Existing load balances and table function from local storage
 function loadBalancesAndTable() {
-    for (let i = 1; i <= 41; i++) {
+    for (let i = 1; i <= 42; i++) {
         let savedBalance = localStorage.getItem('balance' + i);
         if (savedBalance !== null) {
             document.querySelector('.person' + i + ' .old-balance').textContent = savedBalance;
