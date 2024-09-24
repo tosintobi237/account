@@ -43,14 +43,20 @@ function calculateBalance() {
     }
 
     // Update balances for all persons
-    for (let i = 1; i <= 11; i++) {
+    for (let i = 1; i <= 8; i++) {
+        updatePersonBalance(i, 250);
+    }
+    updatePersonBalance(9, 230);
+    for (let i = 10; i <= 11; i++) {
         updatePersonBalance(i, 250);
     }
     updatePersonBalance(12, 280);
     updatePersonBalance(13, 250);
-    for (let i = 14; i <= 20; i++) {
+    for (let i = 14; i <= 18; i++) {
         updatePersonBalance(i, 300);
     }
+    updatePersonBalance(19, 250)
+    updatePersonBalance(20, 300)
     updatePersonBalance(21, 270);
 
     for (let i = 22; i <= 28; i++) {
