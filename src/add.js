@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Load saved balances and table data on page load
     function loadBalancesAndTable() {
-        for (let i = 1; i <= 44; i++) {
+        for (let i = 1; i <= 45; i++) {
             let savedBalance = localStorage.getItem('balance' + i);
             if (savedBalance !== null) {
                 document.querySelector('.person' + i + ' .old-balance').textContent = savedBalance;
