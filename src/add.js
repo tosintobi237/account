@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let currentDateTime = new Date().toLocaleString(); // Get current date and time
 
         // Loop over all persons and update their balances
-        for (let i = 1; i <= 44; i++) {
+        for (let i = 1; i <= 45; i++) {
             let result = updatePersonBalance(i);
 
             totalBags += result.bags;
