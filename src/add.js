@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
         2: 250,
         3: 250,
         4: 250,
-        5: 270,
+        5: 260,
         7: 250,
         8: 250,
         9: 220,
@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
         13: 250,
         43: 250,
         44: 250,
+        46: 250,
     };
 
     function getPricePerBag(i) {
