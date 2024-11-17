@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
         9: 220,
         12: 280,
         13: 250,
+        35: 250,
+        41: 270,
         43: 250,
         44: 250,
         46: 250,
