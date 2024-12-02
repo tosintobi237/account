@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
         'default': 300,
         1: 250,
         2: 250,
-        3: 250,
         4: 250,
         5: 260,
         7: 250,
@@ -11,8 +10,10 @@ document.addEventListener('DOMContentLoaded', function () {
         9: 220,
         12: 280,
         13: 250,
+        31: 250,
         35: 250,
         41: 270,
+        42: 250,
         43: 250,
         44: 250,
         46: 250,
@@ -70,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let currentDateTime = new Date().toLocaleString(); // Get current date and time
 
         // Loop over all persons and update their balances
-        for (let i = 1; i <= 47; i++) {
+        for (let i = 1; i <= 48; i++) {
             let result = updatePersonBalance(i);
 
             totalBags += result.bags;
@@ -162,7 +163,7 @@ totalRow.insertCell(5).innerHTML = '<strong>' + totalBalanceAfterClick.toFixed(2
 
     // Load saved balances and table data on page load
     function loadBalancesAndTable() {
-        for (let i = 1; i <= 47; i++) {
+        for (let i = 1; i <= 48; i++) {
             let savedBalance = localStorage.getItem('balance' + i);
             if (savedBalance !== null) {
                 document.querySelector('.person' + i + ' .old-balance').textContent = savedBalance;
