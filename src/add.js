@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let currentDateTime = new Date().toLocaleString(); // Get current date and time
 
         // Loop over all persons and update their balances
-        for (let i = 1; i <= 48; i++) {
+        for (let i = 1; i <= 52; i++) {
             let result = updatePersonBalance(i);
 
             totalBags += result.bags;
@@ -163,7 +163,7 @@ totalRow.insertCell(5).innerHTML = '<strong>' + totalBalanceAfterClick.toFixed(2
 
     // Load saved balances and table data on page load
     function loadBalancesAndTable() {
-        for (let i = 1; i <= 48; i++) {
+        for (let i = 1; i <= 52; i++) {
             let savedBalance = localStorage.getItem('balance' + i);
             if (savedBalance !== null) {
                 document.querySelector('.person' + i + ' .old-balance').textContent = savedBalance;
