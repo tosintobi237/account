@@ -112,39 +112,77 @@ totalRow.insertCell(5).innerHTML = '<strong>' + totalBalanceAfterClick.toFixed(2
         listSavedTransactions(); // Update the list of saved transactions
     }
 
+    // // List all saved transactions from local storage
+    // function listSavedTransactions() {
+    //     let transactionListDiv = document.getElementById('savedTransactionList');
+    //     transactionListDiv.innerHTML = '';
+
+    //     let keys = Object.keys(localStorage);
+    //     let savedTransactions = keys.filter(key => key.startsWith('transaction_')).map(key => key.replace('transaction_', ''));
+
+    //     if (savedTransactions.length === 0) {
+    //         transactionListDiv.textContent = 'No saved transactions.';
+    //     } else {
+    //         savedTransactions.forEach(function (dateTime) {
+    //             let transactionItem = document.createElement('div');
+    //             transactionItem.textContent = dateTime;
+
+    //             let loadButton = document.createElement('button');
+    //             loadButton.textContent = 'Load';
+    //             loadButton.onclick = function () {
+    //                 loadTransactionsForDateTime(dateTime);
+    //             };
+    //             transactionItem.appendChild(loadButton);
+
+    //             let deleteButton = document.createElement('button');
+    //             deleteButton.textContent = 'Delete';
+    //             deleteButton.onclick = function () {
+    //                 deleteTransactionsForDateTime(dateTime);
+    //             };
+    //             transactionItem.appendChild(deleteButton);
+
+    //             transactionListDiv.appendChild(transactionItem);
+    //         });
+    //     }
+    // } 
     // List all saved transactions from local storage
-    function listSavedTransactions() {
-        let transactionListDiv = document.getElementById('savedTransactionList');
-        transactionListDiv.innerHTML = '';
+function listSavedTransactions() {
+    let transactionListDiv = document.getElementById('savedTransactionList');
+    transactionListDiv.innerHTML = ''; // Clear previous entries
 
-        let keys = Object.keys(localStorage);
-        let savedTransactions = keys.filter(key => key.startsWith('transaction_')).map(key => key.replace('transaction_', ''));
+    let keys = Object.keys(localStorage);
 
-        if (savedTransactions.length === 0) {
-            transactionListDiv.textContent = 'No saved transactions.';
-        } else {
-            savedTransactions.forEach(function (dateTime) {
-                let transactionItem = document.createElement('div');
-                transactionItem.textContent = dateTime;
+    // Filter keys to only include transaction records
+    let savedTransactions = keys
+        .filter(key => key.startsWith('transaction_'))
+        .map(key => key.replace('transaction_', ''))
+        .sort((a, b) => new Date(b) - new Date(a)); // Sort by date in descending order
 
-                let loadButton = document.createElement('button');
-                loadButton.textContent = 'Load';
-                loadButton.onclick = function () {
-                    loadTransactionsForDateTime(dateTime);
-                };
-                transactionItem.appendChild(loadButton);
+    if (savedTransactions.length === 0) {
+        transactionListDiv.textContent = 'No saved transactions.';
+    } else {
+        savedTransactions.forEach(function (dateTime) {
+            let transactionItem = document.createElement('div');
+            transactionItem.textContent = dateTime;
 
-                let deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Delete';
-                deleteButton.onclick = function () {
-                    deleteTransactionsForDateTime(dateTime);
-                };
-                transactionItem.appendChild(deleteButton);
+            let loadButton = document.createElement('button');
+            loadButton.textContent = 'Load';
+            loadButton.onclick = function () {
+                loadTransactionsForDateTime(dateTime);
+            };
+            transactionItem.appendChild(loadButton);
 
-                transactionListDiv.appendChild(transactionItem);
-            });
-        }
+            let deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function () {
+                deleteTransactionsForDateTime(dateTime);
+            };
+            transactionItem.appendChild(deleteButton);
+
+            transactionListDiv.appendChild(transactionItem);
+        });
     }
+}
 
     // Load the transactions for a specific date and time from local storage
     function loadTransactionsForDateTime(dateTime) {
