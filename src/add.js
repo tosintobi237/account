@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return PRICE_PER_BAG[i] || PRICE_PER_BAG['default'];
     }
 
-    // Update individual person's balance
     function updatePersonBalance(i) {
         let bags = parseInt(document.getElementById('bags' + i).value) || 0;
         let amountPaid = parseFloat(document.getElementById('amount' + i).value) || 0;
@@ -50,12 +49,10 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     }
 
-    // Insert a new row into the table
     function insertRow(tableBody, data, isTotalRow = false) {
         let row = tableBody.insertRow();
-        let currentDateTime = new Date().toLocaleString();
 
-        row.insertCell(0).textContent = isTotalRow ? currentDateTime : data.dateTime || currentDateTime;
+        row.insertCell(0).textContent = isTotalRow ? data.dateTime : data.dateTime || '';
         row.insertCell(1).textContent = isTotalRow ? 'TOTAL' : data.name;
         row.insertCell(2).textContent = data.bags.toFixed(0);
         row.insertCell(3).textContent = data.amountPaid.toFixed(2);
@@ -70,11 +67,11 @@ document.addEventListener('DOMContentLoaded', function () {
         let totalBalanceAfterClick = 0;
         let totalCostSum = 0;
         let tableBody = document.querySelector('#recordTable tbody');
-        tableBody.innerHTML = ''; // Clear previous records
+        tableBody.innerHTML = '';
 
-        let currentDateTime = new Date().toLocaleString(); // Get current date and time
+        let currentDateTime = new Date().toLocaleString();
+        let transactionData = [];
 
-        // Loop over all persons and update their balances
         for (let i = 1; i <= 54; i++) {
             let result = updatePersonBalance(i);
 
@@ -84,117 +81,84 @@ document.addEventListener('DOMContentLoaded', function () {
             totalBalanceAfterClick += result.totalBalance;
             totalCostSum += result.totalCost;
 
-            insertRow(tableBody, {
+            let data = {
                 dateTime: currentDateTime,
                 name: document.querySelector('.person' + i + ' h3').textContent,
                 ...result
-            });
+            };
+
+            transactionData.push(data);
+            insertRow(tableBody, data);
         }
 
-        // Insert a final row for totals
-        let totalRow = tableBody.insertRow();
-totalRow.insertCell(0).innerHTML = '<strong>' + currentDateTime + '</strong>';
-totalRow.insertCell(1).innerHTML = '<strong>TOTAL</strong>';
-totalRow.insertCell(2).innerHTML = '<strong>' + totalBags + '</strong>';
-totalRow.insertCell(3).innerHTML = '<strong>' + totalAmountPaid.toFixed(2) + '</strong>';
-totalRow.insertCell(4).innerHTML = '<strong>' + totalOldBalanceBeforeClick.toFixed(2) + '</strong>';
-totalRow.insertCell(5).innerHTML = '<strong>' + totalBalanceAfterClick.toFixed(2) + '</strong>';
+        transactionData.push({
+            dateTime: currentDateTime,
+            name: 'TOTAL',
+            bags: totalBags,
+            amountPaid: totalAmountPaid,
+            oldBalance: totalOldBalanceBeforeClick,
+            totalBalance: totalBalanceAfterClick
+        });
 
-        // Save the updated table content to local storage
-        localStorage.setItem('transaction_' + currentDateTime, tableBody.innerHTML);
+        localStorage.setItem('transaction_' + currentDateTime, JSON.stringify(transactionData));
 
-        // Update total summaries on the page
         document.getElementById('totalBags').textContent = totalBags;
         document.getElementById('totalAmountPaid').textContent = totalAmountPaid.toFixed(2);
         document.getElementById('totalOldBalanceBeforeClick').textContent = totalOldBalanceBeforeClick.toFixed(2);
         document.getElementById('totalBalanceAfterClick').textContent = totalBalanceAfterClick.toFixed(2);
 
-        listSavedTransactions(); // Update the list of saved transactions
+        listSavedTransactions();
     }
 
-    // // List all saved transactions from local storage
-    // function listSavedTransactions() {
-    //     let transactionListDiv = document.getElementById('savedTransactionList');
-    //     transactionListDiv.innerHTML = '';
+    function listSavedTransactions() {
+        let transactionListDiv = document.getElementById('savedTransactionList');
+        transactionListDiv.innerHTML = '';
 
-    //     let keys = Object.keys(localStorage);
-    //     let savedTransactions = keys.filter(key => key.startsWith('transaction_')).map(key => key.replace('transaction_', ''));
+        let keys = Object.keys(localStorage);
 
-    //     if (savedTransactions.length === 0) {
-    //         transactionListDiv.textContent = 'No saved transactions.';
-    //     } else {
-    //         savedTransactions.forEach(function (dateTime) {
-    //             let transactionItem = document.createElement('div');
-    //             transactionItem.textContent = dateTime;
+        let savedTransactions = keys
+            .filter(key => key.startsWith('transaction_'))
+            .map(key => key.replace('transaction_', ''))
+            .sort((a, b) => new Date(b) - new Date(a));
 
-    //             let loadButton = document.createElement('button');
-    //             loadButton.textContent = 'Load';
-    //             loadButton.onclick = function () {
-    //                 loadTransactionsForDateTime(dateTime);
-    //             };
-    //             transactionItem.appendChild(loadButton);
+        if (savedTransactions.length === 0) {
+            transactionListDiv.textContent = 'No saved transactions.';
+        } else {
+            savedTransactions.forEach(function (dateTime) {
+                let transactionItem = document.createElement('div');
+                transactionItem.textContent = dateTime;
 
-    //             let deleteButton = document.createElement('button');
-    //             deleteButton.textContent = 'Delete';
-    //             deleteButton.onclick = function () {
-    //                 deleteTransactionsForDateTime(dateTime);
-    //             };
-    //             transactionItem.appendChild(deleteButton);
+                let loadButton = document.createElement('button');
+                loadButton.textContent = 'Load';
+                loadButton.onclick = function () {
+                    loadTransactionsForDateTime(dateTime);
+                };
+                transactionItem.appendChild(loadButton);
 
-    //             transactionListDiv.appendChild(transactionItem);
-    //         });
-    //     }
-    // } 
-    // List all saved transactions from local storage
-function listSavedTransactions() {
-    let transactionListDiv = document.getElementById('savedTransactionList');
-    transactionListDiv.innerHTML = ''; // Clear previous entries
+                let deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = function () {
+                    deleteTransactionsForDateTime(dateTime);
+                };
+                transactionItem.appendChild(deleteButton);
 
-    let keys = Object.keys(localStorage);
-
-    // Filter keys to only include transaction records
-    let savedTransactions = keys
-        .filter(key => key.startsWith('transaction_'))
-        .map(key => key.replace('transaction_', ''))
-        .sort((a, b) => new Date(b) - new Date(a)); // Sort by date in descending order
-
-    if (savedTransactions.length === 0) {
-        transactionListDiv.textContent = 'No saved transactions.';
-    } else {
-        savedTransactions.forEach(function (dateTime) {
-            let transactionItem = document.createElement('div');
-            transactionItem.textContent = dateTime;
-
-            let loadButton = document.createElement('button');
-            loadButton.textContent = 'Load';
-            loadButton.onclick = function () {
-                loadTransactionsForDateTime(dateTime);
-            };
-            transactionItem.appendChild(loadButton);
-
-            let deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.onclick = function () {
-                deleteTransactionsForDateTime(dateTime);
-            };
-            transactionItem.appendChild(deleteButton);
-
-            transactionListDiv.appendChild(transactionItem);
-        });
+                transactionListDiv.appendChild(transactionItem);
+            });
+        }
     }
-}
 
-    // Load the transactions for a specific date and time from local storage
     function loadTransactionsForDateTime(dateTime) {
         let savedTransaction = localStorage.getItem('transaction_' + dateTime);
         if (savedTransaction) {
-            document.querySelector('#recordTable tbody').innerHTML = savedTransaction;
+            let transactionData = JSON.parse(savedTransaction);
+            let tableBody = document.querySelector('#recordTable tbody');
+            tableBody.innerHTML = '';
+            transactionData.forEach(data => insertRow(tableBody, data));
         } else {
             alert('No transactions found for ' + dateTime);
         }
     }
 
-    // Delete the transactions for a specific date and time from local storage
     function deleteTransactionsForDateTime(dateTime) {
         if (confirm('Are you sure you want to delete the transactions for ' + dateTime + '?')) {
             localStorage.removeItem('transaction_' + dateTime);
@@ -203,7 +167,6 @@ function listSavedTransactions() {
         }
     }
 
-    // Load saved balances and table data on page load
     function loadBalancesAndTable() {
         for (let i = 1; i <= 54; i++) {
             let savedBalance = localStorage.getItem('balance' + i);
@@ -212,20 +175,13 @@ function listSavedTransactions() {
                 document.querySelector('.person' + i + ' .total-balance').textContent = savedBalance;
             }
         }
-
-        let savedTableContent = localStorage.getItem('transaction_' + new Date().toLocaleString());
-        if (savedTableContent !== null) {
-            document.querySelector('#recordTable tbody').innerHTML = savedTableContent;
-        }
     }
 
-    // Initialize the page
     window.onload = function () {
         loadBalancesAndTable();
         listSavedTransactions();
     };
 
-    // Expose functions globally
     window.calculateBalance = calculateBalance;
     window.loadTransactionsForDateTime = loadTransactionsForDateTime;
     window.deleteTransactionsForDateTime = deleteTransactionsForDateTime;
